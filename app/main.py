@@ -82,8 +82,9 @@ def get_website_url(link):
             if html.status_code != 200:
                 raise requests.HTTPError
             soup = BeautifulSoup(html.text, "lxml")
+            url_list = soup.find("div", class_="block activity-buttons")
             website_url = (
-                soup.find("a", title="Click here to Visit Website")
+                url_list.find_all("a")[1]
                 .get("href")
                 .strip()
             )

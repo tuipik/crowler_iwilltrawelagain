@@ -87,8 +87,9 @@ async def get_website_url(link, session):
                 raise HTTPClientError
             html = await response.text()
             soup = BeautifulSoup(html, "lxml")
+            url_list = soup.find("div", class_="block activity-buttons")
             website_url = (
-                soup.find("a", title="Click here to Visit Website")
+                url_list.find_all("a")[1]
                 .get("href")
                 .strip()
             )
